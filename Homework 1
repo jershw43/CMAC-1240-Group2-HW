@@ -1,21 +1,75 @@
-<include iostream>
+#include <iostream>
+#include <cmath>
+
 using namespace std;
 
-int main()
-{
-//declare variables
-double num1,num2;
-
-//Menu will go here
-
-
-
-//Get user input for both variables.
-cout << "Enter your first number" << endl;
-cin >> num1;
-
-cout << "Enter your second number" << endl;
-cin >> num2;
+int main() {
+	
+	int function;
+	double number1 = 0.00;
+	double number2 = 0.00;
+	double result = 0.00;
+	
+	cout << "This program is a 5 function calculator."
+			"\n\nPlease select from the following functions.";
+	
+	do {
+	
+	cout << "\n  Menu (Enter 0 to quit)"
+			"\n  1. Addition" 
+			"\n  2. Subtraction" 
+			"\n  3. Multiplication" 
+			"\n  4. Division" 
+			"\n  5. Binary Logarithm"
+			"\n\nFunction to execute: ";
+		
+	cin >> function;
+	;
+	
+	if (function == 1){
+		cout << "\nYou have selected the function Addition. \n\nPlease enter the first number: ";
+		cin >> number1;
+		cout << "Please enter the second number: ";
+		cin >> number2;
+		cout << "\n\nAnswer: " << number1 << "+" << number2 <<"=" << number1 + number2 << endl;
+	}
+		
+	else if (function == 2){
+		cout << "\nYou have selected the function Subtraction. \n\nPlease enter the first number: ";
+		cin >> number1;
+		cout << "Please enter the second number: ";
+		cin >> number2;
+		cout << "\n\nAnswer: " << number1 << "-" << number2 <<"=" << number1 - number2 << endl;
+	}
+	
+	else if (function == 3){
+		cout << "\nYou have selected the function Multiplication. \n\nPlease enter the first number: ";
+		cin >> number1;
+		cout << "Please enter the second number: ";
+		cin >> number2;
+		cout << "\n\nAnswer: " << number1 << "*" << number2 <<"=" << number1 * number2 << endl;
+	}
+	
+	else if (function == 4){
+		cout << "\nYou have selected the function Division. \n\nPlease enter the first number: ";
+		cin >> number1;
+		cout << "Please enter the second number: ";
+		cin >> number2;
+		cout << "\n\nAnswer: " << number1 << "/" << number2 <<"=" << number1 / number2 << endl;
+	}
+	
+	else if (function == 5){
+		cout << "\nYou have selected the function Binary Logarithm. \n\nPlease enter the number: ";
+		cin >> number1;
+		result = log2(number1);
+		cout << "\n\nAnswer: log2(" << number1 << ") =" << result << endl;
+	}
+	
+	else if (function == 0){
+		cout << "\n\nQuitting program";
+	}
+	}
+	while (function > 0);
 
 return 0;
 }
