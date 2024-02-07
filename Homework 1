@@ -8,7 +8,6 @@ int main() {
 	int function;
 	double number1 = 0.00;
 	double number2 = 0.00;
-	double result = 0.00;
 	
 	cout << "This program is a 5 function calculator."
 			"\n\nPlease select from the following functions.";
@@ -24,14 +23,13 @@ int main() {
 			"\n\nFunction to execute: ";
 		
 	cin >> function;
-	;
 	
 	if (function == 1){
 		cout << "\nYou have selected the function Addition. \n\nPlease enter the first number: ";
 		cin >> number1;
 		cout << "Please enter the second number: ";
 		cin >> number2;
-		cout << "\n\nAnswer: " << number1 << "+" << number2 <<"=" << number1 + number2 << endl;
+		cout << "\n\nAnswer: " << number1 << " + " << number2 << " = " << number1 + number2 << endl;
 	}
 		
 	else if (function == 2){
@@ -39,7 +37,7 @@ int main() {
 		cin >> number1;
 		cout << "Please enter the second number: ";
 		cin >> number2;
-		cout << "\n\nAnswer: " << number1 << "-" << number2 <<"=" << number1 - number2 << endl;
+		cout << "\n\nAnswer: " << number1 << " - " << number2 << " = " << number1 - number2 << endl;
 	}
 	
 	else if (function == 3){
@@ -47,7 +45,7 @@ int main() {
 		cin >> number1;
 		cout << "Please enter the second number: ";
 		cin >> number2;
-		cout << "\n\nAnswer: " << number1 << "*" << number2 <<"=" << number1 * number2 << endl;
+		cout << "\n\nAnswer: " << number1 << " * " << number2 << " = " << number1 * number2 << endl;
 	}
 	
 	else if (function == 4){
@@ -55,14 +53,13 @@ int main() {
 		cin >> number1;
 		cout << "Please enter the second number: ";
 		cin >> number2;
-		cout << "\n\nAnswer: " << number1 << "/" << number2 <<"=" << number1 / number2 << endl;
+		cout << "\n\nAnswer: " << number1 << " / " << number2 << " = " << number1 / number2 << endl;
 	}
 	
 	else if (function == 5){
 		cout << "\nYou have selected the function Binary Logarithm. \n\nPlease enter the number: ";
 		cin >> number1;
-		result = log2(number1);
-		cout << "\n\nAnswer: log2(" << number1 << ") =" << result << endl;
+		cout << "\n\nAnswer: log2(" << number1 << ") = " << log2(number1) << endl;
 	}
 	
 	else if (function == 0){
