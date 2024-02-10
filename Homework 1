@@ -1,3 +1,5 @@
+// Mike: User input protections + Review
+
 #include <iostream>
 #include <cmath>
 
@@ -61,11 +63,18 @@ int main() {
 		}
 	}
 	
-	else if (function == 5){
-		cout << "\nYou have selected the function Binary Logarithm. \n\nPlease enter the number: ";
-		cin >> number1;
-		cout << "\n\nAnswer: log2(" << number1 << ") = " << log2(number1) << endl;
-	}
+    else if (function == 5){
+        cout << "\nYou have selected the function Binary Logarithm. \n\nPlease enter the number: ";
+        cin >> number1;
+        
+        if (number1 > 0)
+        
+        cout << "\n\nAnswer: log2(" << number1 << ") = " << log2(number1) << endl;
+        
+        else
+        
+        cout << "\nUndefined! Please input a positive number.\n";
+    }
 	
 	else if (function == 0){
 		cout << "\n\nQuitting program";
