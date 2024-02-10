@@ -1,8 +1,11 @@
 // Mike: User input protections + Review
+// Josh: Debugging
+// Taryn: Framework + If statements
+// Tanner: Review + Debugging
 
 #include <iostream>
 #include <cmath>
-//Debugging - Josh
+
 using namespace std;
 
 int main() {
