@@ -2,7 +2,7 @@
 
 #include <iostream>
 #include <cmath>
-
+//Debugging - Josh
 using namespace std;
 
 int main() {
