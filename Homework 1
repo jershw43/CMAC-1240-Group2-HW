@@ -59,7 +59,7 @@ int main() {
 			cout << "\n\nAnswer: " << number1 << " / " << number2 << " = " << number1 / number2 << endl;
 		}
 		else {
-			cout << "\n\nCannot divide by 0" << endl;
+			cout << "\n\nCannot divide by 0." << endl;
 		}
 	}
 	
