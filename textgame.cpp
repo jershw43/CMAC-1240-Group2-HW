@@ -13,6 +13,7 @@ const int MAX_PLAYERS = 3;
 const char* playerNames[MAX_PLAYERS] = {"Warrior", "Mage", "Rogue"};
 int playerHP[MAX_PLAYERS] = {20, 15, 10};
 int playerDamage[MAX_PLAYERS] = {5, 3, 2};
+int playerMP[MAX_PLAYERS] = {5, 10, 7};
 
 // Parallel arrays to store enemy data
 const char* enemyNames[MAX_ENEMIES] = {"Dragon", "Ogre", "Goblin"};
@@ -46,7 +47,8 @@ void battleEncounter(int playerIndex) {
             cout << "You attack the " << enemyNames[enemyIndex] << "!\n";
             enemyHP[enemyIndex] -= playerDamage[playerIndex];
             cout << "Enemy HP: " << enemyHP[enemyIndex] << "\n";
-        } else if (choice == 2) {
+        } 
+        else if (choice == 2) {
             cout << "Choose an item to use:\n";
             for (int i = 0; i < MAX_ITEMS; ++i) {
                 cout << i+1 << ". " << itemNames[i] << " - " << itemEffects[i] << "\n";
@@ -55,19 +57,33 @@ void battleEncounter(int playerIndex) {
             cin >> itemChoice;
             if (itemChoice >= 1 && itemChoice <= MAX_ITEMS) {
                 cout << "You use " << itemNames[itemChoice - 1] << "!\n";
-                // Apply item effect (for simplicity, just restore player's HP)
+            if (itemChoice == 1){
                 playerHP[playerIndex] += 10; // Restore 10 HP
                 cout << "Your HP: " << playerHP[playerIndex] << "\n";
-            } else {
-                cout << "Invalid item choice.\n";
             }
-        } else if (choice == 3) {
+                else if (itemChoice ==2) {
+                cout << "You use " << itemNames[itemChoice - 1] << "!\n";
+                // Apply sword item, increases player damage by 2 
+                playerDamage[playerIndex] += 2; // Increase Damage by 2
+                cout << "Your damage: " << playerDamage[playerIndex] << "\n"; 
+                }
+
+                else if  (itemChoice ==3)      
+              {  cout << "You use " << itemNames[itemChoice - 1] << "!\n";
+                // Apply shield item, increasing damage is decreased by 1
+                enemyDamage[playerIndex] -= 1; // Decrease damage by 1
+                cout << "Enemy damage is now:  " << enemyDamage[enemyIndex] << "\n"; }
+                }
+                else{
+                    cout << "Invalid item choice.\n";
+                }
+    
+               } 
+        else if (choice == 3) {
             cout << "You flee from the battle!\n";
             break;
-        } else {
             cout << "Invalid choice. Try again.\n";
-        }
-
+            } 
         // Enemy's turn
         if (enemyHP[enemyIndex] > 0) {
             cout << "The " << enemyNames[enemyIndex] << " attacks you!\n";
