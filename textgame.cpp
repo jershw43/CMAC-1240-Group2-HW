@@ -28,6 +28,7 @@ const char* itemEffects[MAX_ITEMS] = {"restores 10 HP", "increases damage by 2",
 void displayPlayerStatus(int playerIndex) {
     cout << "Player: " << playerNames[playerIndex] << "\n";
     cout << "HP: " << playerHP[playerIndex] << "\n";
+    cout << "MP: " << playerMP[playerIndex] << "\n"
 }
 
 // Function to simulate a battle encounter
