@@ -9,6 +9,9 @@ const int MAX_ENEMIES = 3;
 const int MAX_ITEMS = 3;
 const int MAX_PLAYERS = 3;
 
+// Game complete bool
+bool gameComplete = false;
+
 // Parallel arrays to store player data
 const char* playerNames[MAX_PLAYERS] = {"Warrior", "Mage", "Rogue"};
 int playerHP[MAX_PLAYERS] = {20, 15, 10};
@@ -35,69 +38,92 @@ void displayPlayerStatus(int playerIndex) {
 void battleEncounter(int playerIndex) {
     int enemyIndex = rand() % MAX_ENEMIES; // Randomly select enemy
 
-    cout << "You encounter a " << enemyNames[enemyIndex] << "!\n";
+    // Sums all enemy hp together for completed game check
+    int overallEnemyHP = 0;
+    for (int x = 0; x < MAX_ENEMIES; x++) {
+        overallEnemyHP += enemyHP[x];
+    }
 
-    // Simulate battle
-    while (playerHP[playerIndex] > 0 && enemyHP[enemyIndex] > 0) {
-        // Player's turn
-        cout << "Your turn: Choose an action (1. Attack, 2. Use item, 3. Flee): ";
-        int choice;
-        cin >> choice;
+    // Checks if enemy has been defeated already
+    if (enemyHP[enemyIndex] > 0) {
+    
+        cout << "You encounter a " << enemyNames[enemyIndex] << "!\n";
 
-        if (choice == 1) {
-            cout << "You attack the " << enemyNames[enemyIndex] << "!\n";
-            enemyHP[enemyIndex] -= playerDamage[playerIndex];
-            cout << "Enemy HP: " << enemyHP[enemyIndex] << "\n";
-        } 
-        else if (choice == 2) {
-            cout << "Choose an item to use:\n";
-            for (int i = 0; i < MAX_ITEMS; ++i) {
-                cout << i+1 << ". " << itemNames[i] << " - " << itemEffects[i] << "\n";
+        // Simulate battle
+        while (playerHP[playerIndex] > 0 && enemyHP[enemyIndex] > 0) {
+            // Player's turn
+            cout << "Your turn: Choose an action (1. Attack, 2. Use item, 3. Flee): ";
+            int choice;
+            cin >> choice;
+
+            if (choice == 1) {
+                cout << "You attack the " << enemyNames[enemyIndex] << "!\n";
+                enemyHP[enemyIndex] -= playerDamage[playerIndex];
+                cout << "Enemy HP: " << enemyHP[enemyIndex] << "\n";
             }
-            int itemChoice;
-            cin >> itemChoice;
-            if (itemChoice >= 1 && itemChoice <= MAX_ITEMS) {
-                cout << "You use " << itemNames[itemChoice - 1] << "!\n";
-            if (itemChoice == 1){
-                playerHP[playerIndex] += 10; // Restore 10 HP
-                cout << "Your HP: " << playerHP[playerIndex] << "\n";
-            }
-                else if (itemChoice ==2) {
-                cout << "You use " << itemNames[itemChoice - 1] << "!\n";
-                // Apply sword item, increases player damage by 2 
-                playerDamage[playerIndex] += 2; // Increase Damage by 2
-                cout << "Your damage: " << playerDamage[playerIndex] << "\n"; 
+            else if (choice == 2) {
+                cout << "Choose an item to use:\n";
+                for (int i = 0; i < MAX_ITEMS; ++i) {
+                    cout << i+1 << ". " << itemNames[i] << " - " << itemEffects[i] << "\n";
                 }
-
-                else if  (itemChoice ==3)      
-              {  cout << "You use " << itemNames[itemChoice - 1] << "!\n";
-                // Apply shield item, increasing damage is decreased by 1
-                enemyDamage[playerIndex] -= 1; // Decrease damage by 1
-                cout << "Enemy damage is now:  " << enemyDamage[enemyIndex] << "\n"; }
+                int itemChoice;
+                cin >> itemChoice;
+                if (itemChoice >= 1 && itemChoice <= MAX_ITEMS) {
+                    cout << "You use " << itemNames[itemChoice - 1] << "!\n";
+                    if (itemChoice == 1){
+                        playerHP[playerIndex] += 10; // Restore 10 HP
+                        cout << "Your HP: " << playerHP[playerIndex] << "\n";
+                    }
+                    else if (itemChoice ==2) {
+                        cout << "You use " << itemNames[itemChoice - 1] << "!\n";
+                        // Apply sword item, increases player damage by 2 
+                        playerDamage[playerIndex] += 2; // Increase Damage by 2
+                        cout << "Your damage: " << playerDamage[playerIndex] << "\n"; 
+                    }
+                    else if  (itemChoice ==3) {    
+                        cout << "You use " << itemNames[itemChoice - 1] << "!\n";
+                        // Apply shield item, increasing damage is decreased by 1
+                        enemyDamage[playerIndex] -= 1; // Decrease damage by 1
+                        cout << "Enemy damage is now:  " << enemyDamage[enemyIndex] << "\n"; 
+                    }
                 }
                 else{
                     cout << "Invalid item choice.\n";
                 }
-    
-               } 
-        else if (choice == 3) {
-            cout << "You flee from the battle!\n";
-            break;
-            cout << "Invalid choice. Try again.\n";
-            } 
-        // Enemy's turn
-        if (enemyHP[enemyIndex] > 0) {
-            cout << "The " << enemyNames[enemyIndex] << " attacks you!\n";
-            playerHP[playerIndex] -= enemyDamage[enemyIndex];
-            cout << "Your HP: " << playerHP[playerIndex] << "\n";
+            }
+            else if (choice == 3) {
+                cout << "You flee from the battle!\n";
+                break;
+                cout << "Invalid choice. Try again.\n";
+            }
+            // Enemy's turn
+            if (enemyHP[enemyIndex] > 0) {
+                cout << "The " << enemyNames[enemyIndex] << " attacks you!\n";
+                playerHP[playerIndex] -= enemyDamage[enemyIndex];
+                cout << "Your HP: " << playerHP[playerIndex] << "\n";
+            }
+        }
+
+        // Check battle outcome
+        if (playerHP[playerIndex] <= 0) {
+            cout << "Game over! You were defeated.\n";
+        } else if (enemyHP[enemyIndex] <= 0) {
+            cout << "You defeated the " << enemyNames[enemyIndex] << "!\n";
+        }
+
+        // Updates enemy hp sum
+        for (int x = 0; x < MAX_ENEMIES; x++) {
+            overallEnemyHP += enemyHP[x];
         }
     }
-
-    // Check battle outcome
-    if (playerHP[playerIndex] <= 0) {
-        cout << "Game over! You were defeated.\n";
-    } else if (enemyHP[enemyIndex] <= 0) {
-        cout << "You defeated the " << enemyNames[enemyIndex] << "!\n";
+    // Checks if all enemies have been defeated using enemy hp sum
+    else if (overallEnemyHP < 1) {
+        cout << "All enemies have been defeated! Good job!" << endl;
+        gameComplete = true;
+    }
+    // Rerandomizes enemy if selected enemy has been defeated already
+    else {
+        enemyIndex = rand() % MAX_ENEMIES;
     }
 }
 
@@ -121,7 +147,7 @@ int main() {
     displayPlayerStatus(playerIndex);
 
     // Start the game loop
-    while (playerHP[playerIndex] > 0) {
+    while ((playerHP[playerIndex] > 0) && !gameComplete) {
         // Simulate battle encounter
         battleEncounter(playerIndex);
     }
