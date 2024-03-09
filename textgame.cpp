@@ -127,58 +127,6 @@ void battleEncounter(int playerIndex) {
     }
 }
 
-// Function for random events
-void randomEvent(int playerIndex) {
-
-    float randomEventNumber = rand() % 5 + 1;
-    int randomEventDecision = 0;
-    bool randomEventComplete = true;
-
-    while (randomEventComplete) {
-
-        if (randomEventNumber == 1) {
-            cout << "You come across a statue in a decrepit ruin. Touching the cold stone fills you with vitality, reminding you of heroes of old. (+5 HP)" << endl;
-            playerHP[playerIndex] += 5;
-            randomEventComplete = false;
-        }
-
-        else if (randomEventNumber == 2) {
-            cout << "While stumbling through a graveyard, an odd skeleton rises up from the ground. It offers you a smoothed stone before collapsing." << endl;
-            randomEventComplete = false;
-        }
-
-        else if (randomEventNumber == 3) {
-            cout << "You come across a vast pit, leaving you only one option. To jump over it." << endl << endl << "Press 1 to make the jump: ";
-            cin >> randomEventDecision;
-                if (randomEventDecision == 1) {
-                    int pitFall = rand() % 1;
-                    if (pitFall = 1) {
-                        cout << "You cross the pit safely!" << endl;
-                    }
-                    else if (pitFall = 0) {
-                        cout << "You stumble, falling into the pit! It takes hours to climb back out... (-10 HP)" << endl;
-                        playerHP[playerIndex] - 10;
-                    } 
-                }
-            randomEventComplete = false;
-
-        }
-
-        else if (randomEventNumber == 4) {
-            cout << "You walk past a serene waterfall. You take a moment to sit down and catch your breath, it calms you." << endl;
-            randomEventComplete = false;
-        }
-
-        else {
-            cout << "You find a relaxing inn. You're offered a refreshing bowl of stew by the innkeep, an orc named Shimac. (+15 HP)" << endl;
-            playerHP[playerIndex] += 15;
-            randomEventComplete = false;
-        }
-
-    }
-
-}
-
 // Main function
 int main() {
     // Seed random number generator
@@ -198,20 +146,10 @@ int main() {
     // Display player status
     displayPlayerStatus(playerIndex);
 
-    // Start the game loop, random chance to pick random encounter or battle.
+    // Start the game loop
     while ((playerHP[playerIndex] > 0) && !gameComplete) {
-        int adventureType = rand() % 2;
-
-        if (adventureType == 1) {
-            // Simulate random event
-            randomEvent(playerIndex);
-            adventureType++;
-        }
-
-        else {
         // Simulate battle encounter
         battleEncounter(playerIndex);
-        }
     }
 
     return 0;
