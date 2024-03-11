@@ -52,7 +52,7 @@ void battleEncounter(int playerIndex) {
         // Simulate battle
         while (playerHP[playerIndex] > 0 && enemyHP[enemyIndex] > 0) {
             // Player's turn
-            cout << "Your turn: Choose an action (1. Attack, 2. Use item, 3. Flee): ";
+            cout << "Your turn: Choose an action (1. Attack, 2. Use item, 3. Magic 4. Flee): ";
             int choice;
             cin >> choice;
 
@@ -80,7 +80,13 @@ void battleEncounter(int playerIndex) {
                         playerDamage[playerIndex] += 2; // Increase Damage by 2
                         cout << "Your damage: " << playerDamage[playerIndex] << "\n"; 
                     }
-                    else if  (itemChoice ==3) {    
+                    else if (itemChoice ==3)
+                    {
+                        // Apply sword item, increases player damage by 2 
+                        playerDamage[playerIndex] += 2; // Increase Damage by 2
+                        cout << "Your damage: " << playerDamage[playerIndex] << "\n";    
+                    }
+                    else if  (itemChoice ==4) {    
                         cout << "You use " << itemNames[itemChoice - 1] << "!\n";
                         // Apply shield item, increasing damage is decreased by 1
                         enemyDamage[playerIndex] -= 1; // Decrease damage by 1
@@ -91,7 +97,62 @@ void battleEncounter(int playerIndex) {
                     cout << "Invalid item choice.\n";
                 }
             }
-            else if (choice == 3) {
+            else if (choice == 3)
+            {
+                cout << "Choose your magic: 1. Fire, 2. Lightning, 3. Ice, 4. Flee: ";
+                    int choice;
+                    cin >> choice;
+                    if (choice == 1)
+                    {
+                        cout << "You chose fire: " << endl;
+                        if (strcmp(enemyNames[enemyIndex], "Dragon") == 0 )
+                        {
+                            cout << "With fire running through the veins of the Dragon, your fire spell is less effective. " << "\n";
+                            playerDamage[playerIndex] -=1;
+                            cout << "Your damage: " << playerDamage[playerIndex] << "\n";
+                        }
+                        else 
+                        {
+                            playerDamage[playerIndex] = 4;
+                            cout << "Your damage: " << playerDamage[playerIndex] << "\n";
+                        }
+                    }
+                else if (choice == 2)
+                    {
+                        cout << "You chose lightning: " << endl;
+                        if (strcmp(enemyNames[enemyIndex], "Goblin") == 0 )
+                        {
+                            cout << "The Goblin has taken a liking to rubber boots it got from a previous victim. Your lightning spell is less effective." << "\n";
+                            playerDamage[playerIndex] -=1;
+                            cout << "Your damage: " << playerDamage[playerIndex] << "\n";
+                        }
+                        else 
+                        {
+                            playerDamage[playerIndex] = 4;
+                            cout << "Your damage: " << playerDamage[playerIndex] << "\n";
+                        }
+                    }
+                else if (choice == 3)
+                    {
+                        cout << "You chose ice: " << endl;
+                        if (strcmp(enemyNames[enemyIndex], "Ogre") == 0 )
+                        {
+                            cout << "The Ogre has a thick hide that will be tough to break. Your ice spell is less effective." << "\n";
+                            playerDamage[playerIndex] -=1;
+                            cout << "Your damage: " << playerDamage[playerIndex] << "\n";
+                        }
+                        else 
+                        {
+                            playerDamage[playerIndex] = 4;
+                            cout << "Your damage: " << playerDamage[playerIndex] << "\n";
+                        }
+                    }
+                else if (choice == 4)
+                {
+                    break;
+                }   
+            }
+            else if (choice == 4) {
                 cout << "You flee from the battle!\n";
                 break;
                 cout << "Invalid choice. Try again.\n";
