@@ -12,6 +12,9 @@ const int MAX_PLAYERS = 3;
 // Game complete bool
 bool gameComplete = false;
 
+// Keeps track of enemies defeated
+int enemyDefeatedCount = 0;
+
 // Parallel arrays to store player data
 const char* playerNames[MAX_PLAYERS] = {"Warrior", "Mage", "Rogue"};
 int playerHP[MAX_PLAYERS] = {20, 15, 10};
@@ -166,10 +169,11 @@ void battleEncounter(int playerIndex) {
         } else if (enemyHP[enemyIndex] <= 0) {
             cout << "You defeated the " << enemyNames[enemyIndex] << "!\n";
             enemyDefeated[enemyIndex] = true;
+            enemyDefeatedCount++;
         }
     }
-    // Checks if all enemies have been defeated using enemy hp sum
-    else if (enemyDefeated[0] && enemyDefeated[1] && enemyDefeated[2]) {
+    // Checks if all enemies have been defeated
+    else if (enemyDefeatedCount == MAX_ENEMIES) {
         cout << "All enemies have been defeated! Good job!" << endl;
         gameComplete = true;
     }
