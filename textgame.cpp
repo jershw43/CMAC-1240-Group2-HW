@@ -22,6 +22,7 @@ int playerMP[MAX_PLAYERS] = {5, 10, 7};
 const char* enemyNames[MAX_ENEMIES] = {"Dragon", "Ogre", "Goblin"};
 int enemyHP[MAX_ENEMIES] = {20, 15, 10};
 int enemyDamage[MAX_ENEMIES] = {5, 3, 2};
+bool enemyDefeated[MAX_ENEMIES] = {false, false, false};
 
 // Parallel arrays to store item data
 const char* itemNames[MAX_ITEMS] = {"Potion", "Sword", "Shield"};
@@ -38,14 +39,8 @@ void displayPlayerStatus(int playerIndex) {
 void battleEncounter(int playerIndex) {
     int enemyIndex = rand() % MAX_ENEMIES; // Randomly select enemy
 
-    // Sums all enemy hp together for completed game check
-    int overallEnemyHP = 0;
-    for (int x = 0; x < MAX_ENEMIES; x++) {
-        overallEnemyHP += enemyHP[x];
-    }
-
     // Checks if enemy has been defeated already
-    if (enemyHP[enemyIndex] > 0) {
+    if (!enemyDefeated[enemyIndex]) {
     
         cout << "You encounter a " << enemyNames[enemyIndex] << "!\n";
 
@@ -170,15 +165,11 @@ void battleEncounter(int playerIndex) {
             cout << "Game over! You were defeated.\n";
         } else if (enemyHP[enemyIndex] <= 0) {
             cout << "You defeated the " << enemyNames[enemyIndex] << "!\n";
-        }
-
-        // Updates enemy hp sum
-        for (int x = 0; x < MAX_ENEMIES; x++) {
-            overallEnemyHP += enemyHP[x];
+            enemyDefeated[enemyIndex] = true;
         }
     }
     // Checks if all enemies have been defeated using enemy hp sum
-    else if (overallEnemyHP < 1) {
+    else if (enemyDefeated[0] && enemyDefeated[1] && enemyDefeated[2]) {
         cout << "All enemies have been defeated! Good job!" << endl;
         gameComplete = true;
     }
