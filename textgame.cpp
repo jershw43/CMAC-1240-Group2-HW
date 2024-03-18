@@ -1,6 +1,6 @@
 //Tanner Lauritzen-enemy defeated checks, debugging
 //Taryn Dillie-added level systems, debugging
-
+//Josh Watson - debugging, magic system, item system
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
@@ -36,11 +36,12 @@ bool enemyDefeated[MAX_ENEMIES] = {false, false, false};
 
 // Parallel arrays to store item data
 const char* itemNames[MAX_ITEMS] = {"Potion", "Sword", "Shield"};
-const char* itemEffects[MAX_ITEMS] = {"restores 10 HP", "increases damage by 2", "increases defense"};
+const char* itemEffects[MAX_ITEMS] = {"restores 10 HP", "increases damage by 2", "increases defense by 1"};
+
 
 //Parallel arrays to store player level data
 const char* levelNames[MAX_LEVELS] = {"Level 1", "Level 2", "Level 3"};
-const char* levelEffects[MAX_LEVELS] = {"increase 20 HP", "increase 40 HP", "increase 60 HP"};
+const char* levelEffects[MAX_LEVELS] = {"increases to 20 HP", "increases to 40 HP", "increases to 60 HP"};
 
 // Function to display player status
 void displayPlayerStatus(int playerIndex) {
@@ -55,17 +56,17 @@ void displayPlayerLevel(int playerLevel, int playerIndex){
 	{
 	case 0: {playerHP[playerIndex] += 20;
 		cout << "You are now " << levelNames[0] << "!\n";
-		cout << "You now " << levelEffects[0] << "!\n";
+		cout << "Your health " << levelEffects[0] << "!\n";
 		break;
 	}
 	case 1:{playerHP[playerIndex] += 40;
 		cout << "You are now " << levelNames[1] << "!\n";
-		cout << "You now " << levelEffects[1] << "!\n";
+		cout << "Your health " << levelEffects[1] << "!\n";
 		break;
 	}
 	case 2:{playerHP[playerIndex] += 60;
 		cout << "You are now " << levelNames[2] << "!\n";
-		cout << "You now " << levelEffects[2] << "!\n";
+		cout << "Your health " << levelEffects[2] << "!\n";
 		break;
 		}
 	}
@@ -101,23 +102,19 @@ void battleEncounter(int playerIndex) {
                 cin >> itemChoice;
                 if (itemChoice >= 1 && itemChoice <= MAX_ITEMS) {
                     cout << "You use " << itemNames[itemChoice - 1] << "!\n";
-                    if (itemChoice == 1){
+                    
+                    if (itemChoice == 1 ){
                         playerHP[playerIndex] += 10; // Restore 10 HP
                         cout << "Your HP: " << playerHP[playerIndex] << "\n";
+                        
                     }
-                    else if (itemChoice ==2) {
+                    else if (itemChoice ==2 ) {
                         cout << "You use " << itemNames[itemChoice - 1] << "!\n";
                         // Apply sword item, increases player damage by 2 
                         playerDamage[playerIndex] += 2; // Increase Damage by 2
                         cout << "Your damage: " << playerDamage[playerIndex] << "\n"; 
                     }
-                    else if (itemChoice ==3)
-                    {
-                        // Apply sword item, increases player damage by 2 
-                        playerDamage[playerIndex] += 2; // Increase Damage by 2
-                        cout << "Your damage: " << playerDamage[playerIndex] << "\n";    
-                    }
-                    else if  (itemChoice ==4) {    
+                    else if  (itemChoice ==3) {    
                         cout << "You use " << itemNames[itemChoice - 1] << "!\n";
                         // Apply shield item, increasing damage is decreased by 1
                         enemyDamage[playerIndex] -= 1; // Decrease damage by 1
