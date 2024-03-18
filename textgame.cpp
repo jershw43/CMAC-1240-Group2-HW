@@ -8,12 +8,16 @@ using namespace std;
 const int MAX_ENEMIES = 3;
 const int MAX_ITEMS = 3;
 const int MAX_PLAYERS = 3;
+const int MAX_LEVELS = 3;
 
 // Game complete bool
 bool gameComplete = false;
 
 // Keeps track of enemies defeated
 int enemyDefeatedCount = 0;
+
+//Keeps track of player level
+int playerLevel = 0;
 
 // Parallel arrays to store player data
 const char* playerNames[MAX_PLAYERS] = {"Warrior", "Mage", "Rogue"};
@@ -31,11 +35,37 @@ bool enemyDefeated[MAX_ENEMIES] = {false, false, false};
 const char* itemNames[MAX_ITEMS] = {"Potion", "Sword", "Shield"};
 const char* itemEffects[MAX_ITEMS] = {"restores 10 HP", "increases damage by 2", "increases defense"};
 
+//Parallel arrays to store player level data
+const char* levelNames[MAX_LEVELS] = {"Level 1", "Level 2", "Level 3"};
+const char* levelEffects[MAX_LEVELS] = {"increase 20 HP", "increase 40 HP", "increase 60 HP"};
+
 // Function to display player status
 void displayPlayerStatus(int playerIndex) {
     cout << "Player: " << playerNames[playerIndex] << "\n";
     cout << "HP: " << playerHP[playerIndex] << "\n";
     cout << "MP: " << playerMP[playerIndex] << "\n";
+}
+
+//Function to display player level
+void displayPlayerLevel(int playerLevel, int playerIndex){
+	switch (playerLevel)
+	{
+	case 0: {playerHP[playerIndex] += 20;
+		cout << "You are now " << levelNames[0] << "!\n";
+		cout << "You now " << levelEffects[0] << "!\n";
+		break;
+	}
+	case 1:{playerHP[playerIndex] += 40;
+		cout << "You are now " << levelNames[1] << "!\n";
+		cout << "You now " << levelEffects[1] << "!\n";
+		break;
+	}
+	case 2:{playerHP[playerIndex] += 60;
+		cout << "You are now " << levelNames[2] << "!\n";
+		cout << "You now " << levelEffects[2] << "!\n";
+		break;
+		}
+	}
 }
 
 // Function to simulate a battle encounter
@@ -170,6 +200,8 @@ void battleEncounter(int playerIndex) {
             cout << "You defeated the " << enemyNames[enemyIndex] << "!\n";
             enemyDefeated[enemyIndex] = true;
             enemyDefeatedCount++;
+            displayPlayerLevel(playerLevel, playerIndex);
+            playerLevel++;
         }
     }
     // Checks if all enemies have been defeated
