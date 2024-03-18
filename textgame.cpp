@@ -1,3 +1,6 @@
+//Tanner Lauritzen-enemy defeated checks, debugging
+//Taryn Dillie-added level systems, debugging
+
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
