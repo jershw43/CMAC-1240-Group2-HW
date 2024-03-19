@@ -14,6 +14,9 @@ const int MAX_ITEMS = 3;
 const int MAX_PLAYERS = 3;
 const int MAX_LEVELS = 3;
 
+// For alternating events
+int adventureType = 0;
+
 // Game complete bool
 bool gameComplete = false;
 
@@ -71,6 +74,63 @@ void displayPlayerLevel(int playerLevel, int playerIndex){
 		break;
 		}
 	}
+}
+
+// Function for random events
+void randomEvent(int playerIndex) {
+
+    int randomEventNumber = rand() % 5;
+    int randomEventDecision = 0;
+    bool randomEventComplete = true;
+
+    while (randomEventComplete) {
+
+        if (randomEventNumber == 1) {
+            cout << "You come across a statue in a decrepit ruin. Touching the cold stone fills you with vitality, reminding you of heroes of old. (+5 HP)" << endl;
+            playerHP[playerIndex] += 5;
+            randomEventComplete = false;
+            break;
+        }
+
+        else if (randomEventNumber == 2) {
+            cout << "While stumbling through a graveyard, an odd skeleton rises up from the ground. It offers you a smoothed stone before collapsing." << endl;
+            randomEventComplete = false;
+            break;
+        }
+
+        else if (randomEventNumber == 3) {
+            cout << "You come across a vast pit, leaving you only one option. To jump over it." << endl << endl << "Press 1 to make the jump: ";
+            cin >> randomEventDecision;
+                if (randomEventDecision == 1) {
+                    int pitFall = rand() % 2;
+                    if (pitFall == 1) {
+                        cout << "You cross the pit safely!" << endl;
+                    }
+                    else if (pitFall == 0) {
+                        cout << "You stumble, falling into the pit! It takes hours to climb back out... (-10 HP)" << endl;
+                        playerHP[playerIndex] -= 10;
+                    } 
+                }
+            randomEventComplete = false;
+            break;
+
+        }
+
+        else if (randomEventNumber == 4) {
+            cout << "You walk past a serene waterfall. You take a moment to sit down and catch your breath, it calms you." << endl;
+            randomEventComplete = false;
+            break;
+        }
+
+        else {
+            cout << "You find a relaxing inn. You're offered a refreshing bowl of stew by the innkeep, an orc named Shimac. (+15 HP)" << endl;
+            playerHP[playerIndex] += 15;
+            randomEventComplete = false;
+            break;
+        }
+
+    }
+
 }
 
 // Function to simulate a battle encounter
@@ -204,15 +264,17 @@ void battleEncounter(int playerIndex) {
             displayPlayerLevel(playerLevel, playerIndex);
             playerLevel++;
         }
+
+	// Simulate a random event
+	int adventureTypeResultant = rand() % 2;
+	if (adventureTypeResultant == 1) {
+            randomEvent(playerIndex); 
+        }
     }
     // Checks if all enemies have been defeated
     else if (enemyDefeatedCount == MAX_ENEMIES) {
         cout << "All enemies have been defeated! Good job!" << endl;
         gameComplete = true;
-    }
-    // Rerandomizes enemy if selected enemy has been defeated already
-    else {
-        enemyIndex = rand() % MAX_ENEMIES;
     }
 }
 
