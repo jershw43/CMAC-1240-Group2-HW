@@ -298,11 +298,23 @@ int main() {
     // Display player status
     displayPlayerStatus(playerIndex);
 
-    // Start the game loop
+        // Start the game loop, random chance to pick random encounter or battle.
     while ((playerHP[playerIndex] > 0) && !gameComplete) {
-        // Simulate battle encounter
-        battleEncounter(playerIndex);
-    }
+    int adventureTypeResultant = adventureType % 2;
 
+        adventureType++;
+
+        if (adventureTypeResultant == 1) {
+            // Simulate random event
+            randomEvent(playerIndex);
+            
+        }
+
+        else {
+            // Simulate battle encounter
+            battleEncounter(playerIndex);
+        
+        }
+    }
     return 0;
 }
