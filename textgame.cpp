@@ -282,7 +282,7 @@ void battleEncounter(int playerIndex) {
 // Main function
 int main() {
     // Seed random number generator
-    srand(time(nullptr));
+    srand(time(NULL));
 
     // Character creation
     char playerName[50];
