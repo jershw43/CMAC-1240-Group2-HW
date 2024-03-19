@@ -1,7 +1,8 @@
-//Tanner Lauritzen-enemy defeated checks, debugging
-//Taryn Dillie-added level systems, debugging
+//Tanner Lauritzen - enemy defeated checks, debugging
+//Taryn Dillie - added level system, debugging
 //Josh Watson - debugging, magic system, item system
 //Michael Wilson - debugging, game documentation
+
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
@@ -288,7 +289,7 @@ int main() {
     cout << "Enter your name: ";
     cin >> playerName;
 
-    cout << "Welcome, " << playerName << "! Choose your class (1. Warrior, 2. Mage, 3. Rogue): ";
+    cout << "Welcome, " << playerName << "! Defeat all 3 enemies to succed on your quest, but if you run out of HP then you have failed on your quest!\n Choose your class (1. Warrior, 2. Mage, 3. Rogue): ";
     int playerClass;
     cin >> playerClass;
 
