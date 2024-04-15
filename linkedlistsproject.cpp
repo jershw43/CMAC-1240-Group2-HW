@@ -14,6 +14,19 @@ struct List {
 struct List *insert(struct List *node, char *name, int age);
 void printall(struct List *node);
 
+struct List* del_list(struct List *head)
+{
+	struct List *temp = head;
+	
+	while(temp != NULL)
+	{
+		temp = temp->next;
+		free(head);
+		head = temp;
+	}
+	return head;
+}
+
 int main() {
     struct List *head = 0;
     struct List *end = 0;
@@ -98,6 +111,10 @@ int main() {
             case 2: {
                 printf("You have selected Delete All.\n");
                 //Insert delete all function
+                head = del_list(head);
+                	if(head == NULL)
+                		printf("List deleted successfully");
+                	return 0;
 
                 break;
             }
