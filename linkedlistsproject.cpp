@@ -1,7 +1,6 @@
 #include <cstdlib>
 #include <cstdio>
 #include <cstring>
-using namespace std;
 
 struct List {
     char firstName[20];
@@ -10,30 +9,24 @@ struct List {
     struct List *next;
 };
 
+// Insert data
 struct List *insert(struct List *node, char *firstName, char *lastName, int age);
-
-struct List* del_list(struct List *head)
-{
-	struct List *temp = head;
-	
-	while(temp != NULL)
-	{
-		temp = temp->next;
-		free(head);
-		head = temp;
-	}
-	return head;
-}
-
+// Swaps pointers - used for the bubblesort
 struct List *swap(struct List *ptr1, struct List *ptr2);
-void bubbleSort_lastName(struct List **head, int count);
-void bubbleSort_age(struct List **head, int count);
+// Counts the amount of structs created - used for bubblesort
 int count(struct List *node);
-void printList(struct List *node);
+// Bubblesort based on last name
+void bubbleSort_lastName(struct List **head, int count);
+// Bubblesort based on age
+void bubbleSort_age(struct List **head, int count);
+// Delete single entry by last name
 
-// Submenus - Load functions for submenus above these
-void printMenu(struct List *head);
-void deletionMenu(struct List *head);
+// Delete single entry by age
+int deleteNode_age(struct List **head, int search);
+// Delete all
+void del_list(struct List *head);
+// Prints the list
+void printList(struct List *node);
 
 int main() {
     struct List *head = 0;
@@ -42,7 +35,7 @@ int main() {
     int choice = 0;
     bool quit = false;
     do {
-        printf("Select an option: (0) Quit, (1) Insert, (2) Print Menu, (3) Deletion Menu: ");
+        printf("Select an option: (0) Quit, (1) Insert, (2) Print by Last Name, (3) Print by Age, (4) Delete by Last Name, (5) Delete by Age, (6) Delete All: ");
         fflush(stdout);
         scanf("%d", &choice);
         switch (choice) {
@@ -51,13 +44,18 @@ int main() {
                 char bufferLast[50];
                 int age = 0;
 
-                printf("Input first name: "); // Ask user to input first name
+                // Ask user to input first name
+                printf("Input first name: ");
                 fflush(stdout);
                 scanf("%49s", bufferFirst);
-                printf("Input last name: "); // Ask user to input last name
+
+                // Ask user to input last name
+                printf("Input last name: "); 
                 fflush(stdout);
                 scanf("%49s", bufferLast);
-                printf("Input an age: "); // Ask user to input age
+
+                // Ask user to input age
+                printf("Input an age: "); 
                 fflush(stdout);
                 scanf("%d", &age);
 
@@ -71,15 +69,74 @@ int main() {
                 else {
                     end = insert(end, bufferFirst, bufferLast, age);
                 }
-
                 break;
             }
             case 2: {
-                printMenu(head); // Switches to the print menu
+                if (head == 0) {
+                    printf("No List Created.\n");
+                }
+                else {
+                    printf("List Ordered by Last Name:\n");
+                    bubbleSort_lastName(&head, count(head));
+                    printList(head);
+                }
                 break;
             }
             case 3: {
-                deletionMenu(head); // Switches to the deletion menu
+                if (head == 0) {
+                    printf("No List Created.\n");
+                }
+                else {
+                    printf("List Ordered by Age:\n");
+                    bubbleSort_age(&head, count(head));
+                    printList(head);
+                }
+                break;
+            }
+            case 4: {
+                printf("You have selected Delete Entry by Last Name.\n");
+
+                if (head == 0) {
+                    printf("No List Created.\n");
+                }
+                else {
+                    // Insert delete single entry here
+                }
+                break;
+            }
+            case 5: {
+                printf("You have selected Delete Entry by Age.\n");
+                int input = 0;
+
+                if (head == 0) {
+                    printf("No List Created.\n");
+                }
+                else {
+                    printf("Enter the age to delete: ");
+                    fflush(stdout);
+                    scanf("%d", &input);
+                    if (deleteNode_age(&head, input)) {
+                        printf("Sucessfully deleted entry.\n");
+                    }
+                    else {
+                        printf("Failed to delete specified entry.\n");
+                    }
+                }
+
+                break;
+            }
+            case 6: {
+                printf("You have selected Delete All Entries.\n");
+
+                if (head == 0) {
+                    printf("No List Created.\n");
+                }
+                else {
+                    del_list(head);
+                    if(head == NULL)
+                        printf("List deleted successfully\n");
+                }
+
                 break;
             }
             case 0: quit = true; break;
@@ -181,91 +238,52 @@ int count(struct List *node) {
 }
 
 void printList(struct List *node) {
-    while (node != 0) {
-        printf("Name: %s, %s\n", node->lastName, node->firstName);
-        printf("Age: %d\n", node->age);
-        node = node->next;
+    struct List *temp = node;
+    while (temp != 0) {
+        printf("Name: %s, %s\n", temp->lastName, temp->firstName);
+        printf("Age: %d\n", temp->age);
+        temp = temp->next;
     }
 }
 
-void printMenu(struct List *head) {
-    int choice = 0;
-    bool quit = false;
+void del_list(struct List *head) {
+	struct List *temp = head;
+    struct List *next;
+	
+	while(temp != NULL)
+	{
+		next = temp->next;
+		free(temp);
+		temp = next;
+	}
 
-    do {
-        printf("Select Print option: (0) Go back, (1) Print by Last Name, (2) Print by Age: ");
-        fflush(stdout);
-        scanf("%d", &choice);
-
-        switch(choice) {
-            case 1: {
-                if (head == 0) {
-                    printf("No List Created.\n");
-                }
-                else {
-                    printf("List Ordered by Last Name:\n");
-                    bubbleSort_lastName(&head, count(head));
-                    printList(head);
-                }
-
-                break;
-            }
-            case 2: {
-                if (head == 0) {
-                    printf("No List Created.\n");
-                }
-                else {
-                    printf("List Ordered by Age:\n");
-                    bubbleSort_age(&head, count(head));
-                    printList(head);
-                }
-
-                break;
-            }
-            case 0: quit = true; break;
-            default: printf("Invalid option. Please pick a valid option."); break;
-        }
-    } while (!quit);
+    head = NULL;
 }
 
-void deletionMenu(struct List *head) {
-    int choice = 0;
-    bool quit = false;
-
-    do {
-        printf("Select Deletion option: (0) Go back, (1) Delete Single Entry, (2) Delete All Entries: ");
-        fflush(stdout);
-        scanf("%d", &choice);
-
-        switch(choice) {
-            case 1: {
-                printf("You have selected Delete Single Entry.\n");
-
-                if (head == 0) {
-                    printf("No List Created.\n");
-                }
-                else {
-                    // Insert delete single entry here
-                }
-
-                break;
-            }
-            case 2: {
-                printf("You have selected Delete All Entries.\n");
-
-                if (head == 0) {
-                    printf("No List Created.\n");
-                }
-                else {
-                    head = del_list(head);
-                	if(head == NULL)
-                		printf("List deleted successfully");
-                }
-
-                break;
-            }
-            case 0: quit = true; break;
-            default: printf("Invalid option. Please pick a valid option."); break;
-        }
-    } while (!quit);
+int deleteNode_age(struct List ** head, int search) {
+	//deal with first node in list
+	if (head && (*head)) {
+		if ((*head)->age == search) {
+			//we've found the item in the head of the list
+			struct List * temp = (*head)->next;
+			free(*head);
+			*head = temp;
+			return 1; //we found the node to delete.
+		}
+		//else, we check the other items
+		struct List * node = (*head);
+		while (node->next) {
+			if (node->next->age == search) {
+				//delete this node, move the pointer, etc. head contains prev head.
+				struct List * temp = node->next->next; //get the node after the node we are deleting.
+				free(node->next); //free the node we are looking at
+				node->next = temp; //reroute node's next to one after
+				//notice that head is not changed here.
+				return 1;
+			}
+			//we didn't find the data at this node, so continue...
+			node = node->next; //go to next node in list
+		}
+	}
+	return 0;
 }
