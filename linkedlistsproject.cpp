@@ -164,8 +164,24 @@ struct List *insert(struct List *node, char *firstName, char *lastName, int age)
         }
         node->next = newnode;
     }
+    struct List* prev = NULL;
+    struct List* current = node;
+    //find the current position
+    while (current != NULL && strcmp(newnode->lastName, current ->lastName) > 0){
 
-    return newnode;
+        prev = current;
+        current = current->next;
+    }
+    //determine if the new node will be inserted before the current node
+    if (prev == NULL){
+        newnode ->next = node;
+        return newnode;
+    }
+    else{
+        prev->next = newnode;
+        newnode->next = current;
+        return node;
+    }
 }
 
 struct List *swap(struct List *ptr1, struct List *ptr2) {
