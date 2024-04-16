@@ -20,7 +20,7 @@ void bubbleSort_lastName(struct List **head, int count);
 // Bubblesort based on age
 void bubbleSort_age(struct List **head, int count);
 // Delete single entry by last name
-
+int deleteNode_lastName(struct List **head, char *lastName);
 // Delete single entry by age
 int deleteNode_age(struct List **head, int search);
 // Delete all
@@ -100,7 +100,16 @@ int main() {
                     printf("No List Created.\n");
                 }
                 else {
-                    // Insert delete single entry here
+                    char lastName[20];
+                    printf("Enter the last name to delete: ");
+                    fflush(stdout);
+                    scanf("%s", lastName);
+
+                    if (deleteNode_lastName(&head, lastName)) {
+                        printf("Sucessfully deleted entry.\n");
+                    } else {
+                        printf("Failed to delete specified entry.\n");
+                    }
                 }
                 break;
             }
@@ -258,6 +267,29 @@ void del_list(struct List *head) {
 	}
 
     head = NULL;
+}
+
+int deleteNode_lastName(struct List **head, char *lastName) {
+    // function to search for input char and delete associated entry, returning 1 for successful deletion and 0 for failure
+    if (*head && strcmp((*head)->lastName, lastName) == 0) {
+        struct List *temp = (*head)->next;
+        free(*head);
+        *head = temp;
+        return 1;
+    }
+
+    struct List *prev = *head;
+    struct List *current = (*head)->next;
+
+    while (current) {
+        if (strcmp(current->lastName, lastName) == 0) {
+            prev->next = current->next;
+            free(current);
+            return 1;
+        }
+    }
+
+    return 0;
 }
 
 int deleteNode_age(struct List ** head, int search) {
