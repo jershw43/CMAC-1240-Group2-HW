@@ -8,24 +8,23 @@
 #include <cstring>
 
 struct List {
-    char firstName[20];
-    char lastName[20];
+    char name[20];
     int age;
     struct List *next;
 };
 
 // Insert data
-struct List *insert(struct List *node, char *firstName, char *lastName, int age);
+struct List *insert(struct List *node, char *name, int age);
 // Swaps pointers - used for the bubblesort
 struct List *swap(struct List *ptr1, struct List *ptr2);
 // Counts the amount of structs created - used for bubblesort
 int count(struct List *node);
-// Bubblesort based on last name
-void bubbleSort_lastName(struct List **head, int count);
+// Bubblesort based on name
+void bubbleSort_name(struct List **head, int count);
 // Bubblesort based on age
 void bubbleSort_age(struct List **head, int count);
-// Delete single entry by last name
-int deleteNode_lastName(struct List **head, char *lastName);
+// Delete single entry by name
+int deleteNode_name(struct List **head, char *name);
 // Delete single entry by age
 int deleteNode_age(struct List **head, int search);
 // Delete all
@@ -40,24 +39,18 @@ int main() {
     int choice = 0;
     bool quit = false;
     do {
-        printf("Select an option: (0) Quit, (1) Insert, (2) Print by Last Name, (3) Print by Age, (4) Delete by Last Name, (5) Delete by Age, (6) Delete All: ");
+        printf("Select an option:\n(0) Quit\n(1) Insert\n(2) Print by Last Name\n(3) Print by Age\n(4) Delete by Last Name\n(5) Delete by Age\n(6) Delete All:\n");
         fflush(stdout);
         scanf("%d", &choice);
         switch (choice) {
             case 1: {
-                char bufferFirst[50];
-                char bufferLast[50];
+                char buffer[50];
                 int age = 0;
 
-                // Ask user to input first name
+                // Ask user to input name
                 printf("Input first name: ");
                 fflush(stdout);
-                scanf("%49s", bufferFirst);
-
-                // Ask user to input last name
-                printf("Input last name: "); 
-                fflush(stdout);
-                scanf("%49s", bufferLast);
+                scanf("%49s", buffer);
 
                 // Ask user to input age
                 printf("Input an age: "); 
@@ -66,13 +59,13 @@ int main() {
 
                 // Creates the linked list
                 if (head == 0) {
-                    head = insert(0, bufferFirst, bufferLast, age);
+                    head = insert(0, buffer, age);
                 }
                 else if (end == 0) {
-                    end = insert(head, bufferFirst, bufferLast, age);
+                    end = insert(head, buffer, age);
                 }
                 else {
-                    end = insert(end, bufferFirst, bufferLast, age);
+                    end = insert(end, buffer, age);
                 }
                 break;
             }
@@ -81,8 +74,8 @@ int main() {
                     printf("No List Created.\n");
                 }
                 else {
-                    printf("List Ordered by Last Name:\n");
-                    bubbleSort_lastName(&head, count(head));
+                    printf("List Ordered by Name:\n");
+                    bubbleSort_name(&head, count(head));
                     printList(head);
                 }
                 break;
@@ -99,18 +92,18 @@ int main() {
                 break;
             }
             case 4: {
-                printf("You have selected Delete Entry by Last Name.\n");
+                printf("You have selected Delete Entry by Name.\n");
 
                 if (head == 0) {
                     printf("No List Created.\n");
                 }
                 else {
                     char lastName[20];
-                    printf("Enter the last name to delete: ");
+                    printf("Enter the name to delete: ");
                     fflush(stdout);
                     scanf("%s", lastName);
 
-                    if (deleteNode_lastName(&head, lastName)) {
+                    if (deleteNode_name(&head, lastName)) {
                         printf("Sucessfully deleted entry.\n");
                     } else {
                         printf("Failed to delete specified entry.\n");
@@ -147,6 +140,7 @@ int main() {
                 }
                 else {
                     del_list(head);
+                    head = 0;
                     if(head == NULL)
                         printf("List deleted successfully\n");
                 }
@@ -161,14 +155,13 @@ int main() {
     return 0;
 }
 
-struct List *insert(struct List *node, char *firstName, char *lastName, int age) {
+struct List *insert(struct List *node, char *name, int age) {
     struct List *newnode = (struct List *) malloc(sizeof(struct List));
     if (newnode == 0) {
         return 0;
     }
 
-    strcpy(newnode->firstName, firstName);
-    strcpy(newnode->lastName, lastName);
+    strcpy(newnode->name, name);
     newnode->age = age;
     newnode->next = 0;
 
@@ -201,7 +194,7 @@ void bubbleSort_lastName(struct List **head, int count) {
             struct List *p1 = *h;
             struct List *p2 = p1->next;
 
-            if (strcmp(p1->lastName, p2->lastName) > 0) {
+            if (strcmp(p1->name, p2->name) > 0) {
                 *h = swap(p1, p2);
                 swapped = 1;
             }
@@ -254,7 +247,7 @@ int count(struct List *node) {
 void printList(struct List *node) {
     struct List *temp = node;
     while (temp != 0) {
-        printf("Name: %s, %s\n", temp->lastName, temp->firstName);
+        printf("Name: %s\n", temp->name);
         printf("Age: %d\n", temp->age);
         temp = temp->next;
     }
@@ -274,9 +267,9 @@ void del_list(struct List *head) {
     head = NULL;
 }
 
-int deleteNode_lastName(struct List **head, char *lastName) {
+int deleteNode_name(struct List **head, char *name) {
     // function to search for input char and delete associated entry, returning 1 for successful deletion and 0 for failure
-    if (*head && strcmp((*head)->lastName, lastName) == 0) {
+    if (*head && strcmp((*head)->name, name) == 0) {
         struct List *temp = (*head)->next;
         free(*head);
         *head = temp;
@@ -287,7 +280,7 @@ int deleteNode_lastName(struct List **head, char *lastName) {
     struct List *current = (*head)->next;
 
     while (current) {
-        if (strcmp(current->lastName, lastName) == 0) {
+        if (strcmp(current->name, name) == 0) {
             prev->next = current->next;
             free(current);
             return 1;
