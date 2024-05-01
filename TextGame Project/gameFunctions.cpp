@@ -14,7 +14,7 @@ void randomEvents(Player& player) {
         player.experience += 10;
     }
     else if (event == 2) {
-        cout << "\nYou encountered a monster!" << endl;
+        cout << "\nYou step on a trap!" << endl;
         cout << "You lost 10 health points." << endl;
         player.health -= 10;
     }
