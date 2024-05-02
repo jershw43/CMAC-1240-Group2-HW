@@ -13,8 +13,8 @@ enum PlayerClass {
 void setPlayerStats(Player& player, PlayerClass playerClass) {
     switch (playerClass) {
         case Warrior: {
-            player.health = 100;
-            player.attack = 10;
+            player.health = 20;
+            player.attack = 5;
             player.defense = 5;
             player.level = 1;
             player.experience = 0;
@@ -22,8 +22,8 @@ void setPlayerStats(Player& player, PlayerClass playerClass) {
             break;
         }
         case Mage: {
-            player.health = 80;
-            player.attack = 15;
+            player.health = 15;
+            player.attack = 3;
             player.defense = 3;
             player.level = 1;
             player.experience = 0;
@@ -31,8 +31,8 @@ void setPlayerStats(Player& player, PlayerClass playerClass) {
             break;
         }
         case Rogue: {
-            player.health = 90;
-            player.attack = 12;
+            player.health = 10;
+            player.attack = 2;
             player.defense = 4;
             player.level = 1;
             player.experience = 0;
