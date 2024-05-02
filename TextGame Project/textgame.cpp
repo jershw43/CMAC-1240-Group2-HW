@@ -1,3 +1,8 @@
+//Tanner Lauritzen - enemy defeated checks, debugging
+//Taryn Dillie - added level system, debugging
+//Josh Watson - debugging, magic system, item system
+//Michael Wilson - debugging, game documentation
+
 #include <iostream>
 #include <string>
 #include <ctime>
