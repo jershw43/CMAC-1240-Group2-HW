@@ -17,7 +17,8 @@ int main() {
         randomEvents(player);
 
         if (player.health > 0) {
-            mainBattle(player);
+        	Enemy enemy = createRandomEnemy();
+            mainBattle(player, enemy);
         }
 
         levelUp(player);
